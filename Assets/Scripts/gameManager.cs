@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class gameManager : MonoBehaviour
 {
-    public static int s_health;
-    public static int s_maxHealth = 100;
-    public static bool s_isAlife = true;
+    private int s_health ;
+    private int s_maxHealth ;
+    private bool s_isAlife ;
     // Start is called before the first frame update
     void Start()
     {
-        s_health = s_maxHealth;
+        
     }
 
     // Update is called once per frame

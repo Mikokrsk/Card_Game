@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public static int s_health;
-    public static int s_maxHealth;
+    public int s_health;
+    public int s_maxHealth;
 
-    public static int s_armor;
-    public static int s_maxArmor;
+    public int s_armor;
+    public int s_maxArmor;
 
-    public static int s_strength;
-    public static int s_agility;
-    public static int s_intelligence;
-    public static int s_endurance;
+    public int s_strength;
+    public int s_agility;
+    public int s_intelligence;
+    public int s_endurance;
    // public static int s_specialSkill;
 
-    public static int s_money;  
-    public static int s_experience;   
-    public static int s_blockingPower;    
-    public static bool s_isAlife;
+    public int s_money;  
+    public int s_experience;   
+    public int s_blockingPower;    
+    public bool s_isAlife;
     // Start is called before the first frame update
     void Start()
     {

@@ -93,6 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   cardFrame: {fileID: 7081591848765958118}
+  cardType: 0
+  isActiveCard: 0
 --- !u!114 &9191950695938940617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +114,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: -7873773517925364973}
           m_TargetAssemblyTypeName: Card, Assembly-CSharp
-          m_MethodName: CardFrame
+          m_MethodName: ActivateCard
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

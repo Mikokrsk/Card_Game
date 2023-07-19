@@ -6,21 +6,49 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private int index;
     [SerializeField] private GameObject cardFrame;
+    [SerializeField] private CardType cardType;
+    public bool isActiveCard = false;
     // Start is called before the first frame update
+
     void Start()
     {
-    //    cardFrame.active = !cardFrame.active;
+        //    cardFrame.active = !cardFrame.active;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void CardFrame()
+    public void ActivateCard()
     {
-        cardFrame.active = !cardFrame.active;
+        if (isActiveCard)
+        {
+            DeactivateCard();
+        }
+        else
+        {
+            if (CardDeck.Instance.activeCard < CardDeck.Instance.maxActiveCard)
+            {
+                isActiveCard = true;
+                cardFrame.SetActive(true);
+                CardDeck.Instance.activeCard++;
+            }
+        }
+
     }
 
+    public void DeactivateCard()
+    {
+        isActiveCard = false;
+        cardFrame.SetActive(false);
+        CardDeck.Instance.activeCard--;
+    }
+}
+enum CardType
+{
+    Attack,
+    Protection,
+    Medicine
 }

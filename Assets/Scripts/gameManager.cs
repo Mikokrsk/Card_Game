@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class gameManager : MonoBehaviour
 {
     public static gameManager Instance;
-    [SerializeField] private PlayerController playerController;
+    //[SerializeField] private PlayerController playerController;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -51,25 +51,24 @@ public class gameManager : MonoBehaviour
         public int money;
         public int experience;
         public int blockingPower;
-        public bool isAlife;        
+        public bool isAlife;
     }
 
     public void SaveData()
     {
         SaveDataClass data = new SaveDataClass();
-        data.health = playerController.s_health;
-        data.maxHealth = playerController.s_maxHealth;
-        data.armor = playerController.s_armor;
-        data.maxArmor = playerController.s_maxArmor;
-        data.strength = playerController.s_strength;
-        data.agility = playerController.s_agility;
-        data.intelligence = playerController.s_intelligence;
-        data.endurance = playerController.s_endurance;
-        data.money = playerController.s_money;
-        data.experience = playerController.s_experience;
-        data.blockingPower = playerController.s_blockingPower;
-        data.isAlife = playerController.s_isAlife;
-
+        data.health = PlayerController.Instance.health;
+        data.maxHealth = PlayerController.Instance.maxHealth;
+        data.armor = PlayerController.Instance.armor;
+        data.maxArmor = PlayerController.Instance.maxArmor;
+        data.strength = PlayerController.Instance.strength;
+        data.agility = PlayerController.Instance.agility;
+        data.intelligence = PlayerController.Instance.intelligence;
+        data.endurance = PlayerController.Instance.endurance;
+        data.money = PlayerController.Instance.money;
+        data.experience = PlayerController.Instance.experience;
+        data.blockingPower = PlayerController.Instance.blockingPower;
+        data.isAlife = PlayerController.Instance.isAlife;
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
         //Debug.Log($"Save Health = {data.health} MaxHealth = {data.maxHealth}");
@@ -83,42 +82,20 @@ public class gameManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveDataClass data = JsonUtility.FromJson<SaveDataClass>(json);
 
-            playerController.s_health = data.health;
-            playerController.s_maxHealth = data.maxHealth;
-            playerController.s_armor = data.armor;
-            playerController.s_maxArmor = data.armor;
-            playerController.s_strength = data.strength;
-            playerController.s_agility = data.agility;
-            playerController.s_intelligence = data.intelligence;
-            playerController.s_endurance = data.endurance;
-            playerController.s_money = data.money;
-            playerController.s_experience = data.experience;
-            playerController.s_blockingPower = data.blockingPower;
-            playerController.s_isAlife = data.isAlife;
-            Debug.Log(Application.persistentDataPath);
-           // Debug.Log($"Load1 Health = {data.health} MaxHealth = {data.maxHealth}");
-          //  Debug.Log($"Load1 Health = {PlayerController.s_health} MaxHealth = {PlayerController.s_maxHealth}");
+             PlayerController.Instance.health = data.health;
+             PlayerController.Instance.maxHealth = data.maxHealth;
+             PlayerController.Instance.armor = data.armor;
+             PlayerController.Instance.maxArmor = data.armor;
+             PlayerController.Instance.strength = data.strength;
+             PlayerController.Instance.agility = data.agility;
+             PlayerController.Instance.intelligence = data.intelligence;
+             PlayerController.Instance.endurance = data.endurance;
+             PlayerController.Instance.money = data.money;
+             PlayerController.Instance.experience = data.experience;
+             PlayerController.Instance.blockingPower = data.blockingPower;
+             PlayerController.Instance.isAlife = data.isAlife;
+             Debug.Log(Application.persistentDataPath);
         }
     }
-    /*  public void SaveColor()
-      {
-          SaveData data = new SaveData();
-          data.TeamColor = TeamColor;
 
-          string json = JsonUtility.ToJson(data);
-          File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-      }
-
-      public void LoadColor()
-      {
-          string path = Application.persistentDataPath + "/savefile.json";
-          if (File.Exists(path))
-          {
-              string json = File.ReadAllText(path);
-              SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-              TeamColor = data.TeamColor;
-          }
-
-      }*/
 }

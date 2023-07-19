@@ -4,22 +4,34 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int s_health;
-    public int s_maxHealth;
+    public static PlayerController Instance;
+    public int health;
+    public int maxHealth;
 
-    public int s_armor;
-    public int s_maxArmor;
+    public int armor;
+    public int maxArmor;
 
-    public int s_strength;
-    public int s_agility;
-    public int s_intelligence;
-    public int s_endurance;
+    public int strength;
+    public int agility;
+    public int intelligence;
+    public int endurance;
    // public static int s_specialSkill;
 
-    public int s_money;  
-    public int s_experience;   
-    public int s_blockingPower;    
-    public bool s_isAlife;
+    public int money;  
+    public int experience;   
+    public int blockingPower;    
+    public bool isAlife;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -34,12 +46,12 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamageArmor(int damage)
     {
-        if (s_armor > 0)
+        if (armor > 0)
         {
-            s_armor -= damage / s_blockingPower;
-            if (s_armor < 0)
+            armor -= damage / blockingPower;
+            if (armor < 0)
             {
-                TakeDamageHealth(s_armor);
+                TakeDamageHealth(armor);
             }
         }
         else
@@ -51,8 +63,8 @@ public class PlayerController : MonoBehaviour
 
     private void TakeDamageHealth(int damage)
     {
-        s_health -= damage;
-        if (s_health <= 0)
+        health -= damage;
+        if (health <= 0)
         {
             Death();
         }
@@ -60,6 +72,6 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
-        s_isAlife = false;
+        isAlife = false;
     }
 }

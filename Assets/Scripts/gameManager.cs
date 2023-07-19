@@ -3,10 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
+
 public class gameManager : MonoBehaviour
 {
+    public static gameManager Instance;
     [SerializeField] private PlayerController playerController;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         LoadData();
@@ -16,6 +30,11 @@ public class gameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 
     [System.Serializable]

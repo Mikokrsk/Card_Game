@@ -85,7 +85,7 @@ public class gameManager : MonoBehaviour
              PlayerController.Instance.health = data.health;
              PlayerController.Instance.maxHealth = data.maxHealth;
              PlayerController.Instance.armor = data.armor;
-             PlayerController.Instance.maxArmor = data.armor;
+             PlayerController.Instance.maxArmor = data.maxArmor;
              PlayerController.Instance.strength = data.strength;
              PlayerController.Instance.agility = data.agility;
              PlayerController.Instance.intelligence = data.intelligence;
@@ -96,6 +96,7 @@ public class gameManager : MonoBehaviour
              PlayerController.Instance.isAlife = data.isAlife;
              Debug.Log(Application.persistentDataPath);
         }
+        PlayerController.Instance.UpdateHUD();
     }
 
 }

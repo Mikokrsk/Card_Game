@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
+    [SerializeField] private Slider healthSlider;
     public int health;
     public int maxHealth;
-
+    [SerializeField] private Slider armorSlider;
     public int armor;
     public int maxArmor;
 
@@ -15,8 +17,8 @@ public class PlayerController : MonoBehaviour
     public int agility;
     public int intelligence;
     public int endurance;
-   // public static int s_specialSkill;
-
+    // public static int s_specialSkill;
+    [SerializeField] private Text moneyText;
     public int money;  
     public int experience;   
     public int blockingPower;    
@@ -35,7 +37,16 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
+    }
 
+    public void UpdateHUD()
+    {
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = health;
+        armorSlider.maxValue = maxArmor;
+        armorSlider.value = armor;
+        moneyText.text = $"Money :{money}";
     }
 
     // Update is called once per frame
@@ -58,16 +69,23 @@ public class PlayerController : MonoBehaviour
         {
             TakeDamageHealth(damage);
         }
-
+        UpdateHUD();
     }
 
-    private void TakeDamageHealth(int damage)
+    public void TakeDamageHealth(int damage)
     {
         health -= damage;
         if (health <= 0)
         {
             Death();
         }
+        UpdateHUD();
+    }
+
+    public void TakeMoney(int money)
+    {
+        this.money += money;
+        UpdateHUD();
     }
 
     public void Death()

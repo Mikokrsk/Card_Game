@@ -7,7 +7,7 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private float deckUp = 0f;
     [SerializeField] private float deckDown = -150f;
     [SerializeField] private Transform contentContainer;
-    [SerializeField] private GameObject cardPref;
+    //[SerializeField] private GameObject cardPref;
     [SerializeField] private List<Card> cardsOnCardDeck;
     public static CardDeck Instance;
     public int maxActiveCard = 3;
@@ -30,7 +30,7 @@ public class CardDeck : MonoBehaviour
         // UpdateCardsOnCardDeck();
     }
 
-    public void AddCardToCardDeck()
+    public void AddCardToCardDeck(GameObject cardPref)
     {
         var item_go = Instantiate(cardPref);
         item_go.transform.SetParent(contentContainer);

@@ -16,6 +16,7 @@ public class Choice1Of2 : MonoBehaviour
 
     private void Awake()
     {
+        cardDeck = CardDeck.Instance;
         cards.AddRange(Array.ConvertAll(Resources.LoadAll("Cards", typeof(GameObject)), assets => (GameObject)assets));
         eventText = GetComponentInChildren<Text>();
     }

@@ -34,11 +34,6 @@ public class PlayerController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
 
     public void UpdateHUD()
     {
@@ -47,12 +42,6 @@ public class PlayerController : MonoBehaviour
         armorSlider.maxValue = maxArmor;
         armorSlider.value = armor;
         moneyText.text = $"Money :{money}";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void TakeDamageArmor(int damage)

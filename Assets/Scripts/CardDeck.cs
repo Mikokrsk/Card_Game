@@ -33,7 +33,7 @@ public class CardDeck : MonoBehaviour
     public void AddCardToCardDeck(GameObject cardPref)
     {
         var item_go = Instantiate(cardPref);
-        item_go.transform.SetParent(contentContainer);
+        item_go.transform.SetParent(contentContainer,false);
         UpdateCardsOnCardDeck();
         // item_go.GetComponent<Image>().color = cardsInHand.Count % 2 == 0 ? Color.yellow : Color.cyan;       
     }

@@ -5,10 +5,11 @@ using UnityEngine;
 using System.IO;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using System;
 
 public class gameManager : MonoBehaviour
 {
-    public static gameManager Instance;
+    public static gameManager Instance;    
     //[SerializeField] private PlayerController playerController;
     // Start is called before the first frame update
     private void Awake()
@@ -19,7 +20,7 @@ public class gameManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);        
     }
     void Start()
     {

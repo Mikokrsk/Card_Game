@@ -6,20 +6,10 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private int index;
     [SerializeField] private GameObject cardFrame;
-    [SerializeField] private CardType cardType;
+    public CardType cardType ;
     public bool isActiveCard = false;
     // Start is called before the first frame update
 
-    void Start()
-    {
-        //    cardFrame.active = !cardFrame.active;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void ActivateCard()
     {
@@ -46,7 +36,7 @@ public class Card : MonoBehaviour
         CardDeck.Instance.activeCard--;
     }
 }
-enum CardType
+public enum CardType
 {
     Attack,
     Protection,

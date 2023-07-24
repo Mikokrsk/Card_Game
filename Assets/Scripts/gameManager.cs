@@ -10,7 +10,7 @@ using System;
 public class gameManager : MonoBehaviour
 {
     public static gameManager Instance;    
-    //[SerializeField] private PlayerController playerController;
+   // [SerializeField] private Player playerController;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -58,18 +58,18 @@ public class gameManager : MonoBehaviour
     public void SaveData()
     {
         SaveDataClass data = new SaveDataClass();
-        data.health = PlayerController.Instance.health;
-        data.maxHealth = PlayerController.Instance.maxHealth;
-        data.armor = PlayerController.Instance.armor;
-        data.maxArmor = PlayerController.Instance.maxArmor;
-        data.strength = PlayerController.Instance.strength;
-        data.agility = PlayerController.Instance.agility;
-        data.intelligence = PlayerController.Instance.intelligence;
-        data.endurance = PlayerController.Instance.endurance;
-        data.money = PlayerController.Instance.money;
-        data.experience = PlayerController.Instance.experience;
-        data.blockingPower = PlayerController.Instance.blockingPower;
-        data.isAlife = PlayerController.Instance.isAlife;
+        data.health = Player.Instance.health;
+        data.maxHealth = Player.Instance.maxHealth;
+        data.armor = Player.Instance.armor;
+        data.maxArmor = Player.Instance.maxArmor;
+        data.strength = Player.Instance.strength;
+        data.agility = Player.Instance.agility;
+        data.intelligence = Player.Instance.intelligence;
+        data.endurance = Player.Instance.endurance;
+        data.money = Player.Instance.money;
+        data.experience = Player.Instance.experience;
+        data.blockingPower = Player.Instance.blockingPower;
+        data.isAlife = Player.Instance.isAlive;
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
         //Debug.Log($"Save Health = {data.health} MaxHealth = {data.maxHealth}");
@@ -83,21 +83,21 @@ public class gameManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveDataClass data = JsonUtility.FromJson<SaveDataClass>(json);
 
-             PlayerController.Instance.health = data.health;
-             PlayerController.Instance.maxHealth = data.maxHealth;
-             PlayerController.Instance.armor = data.armor;
-             PlayerController.Instance.maxArmor = data.maxArmor;
-             PlayerController.Instance.strength = data.strength;
-             PlayerController.Instance.agility = data.agility;
-             PlayerController.Instance.intelligence = data.intelligence;
-             PlayerController.Instance.endurance = data.endurance;
-             PlayerController.Instance.money = data.money;
-             PlayerController.Instance.experience = data.experience;
-             PlayerController.Instance.blockingPower = data.blockingPower;
-             PlayerController.Instance.isAlife = data.isAlife;
+             Player.Instance.health = data.health;
+             Player.Instance.maxHealth = data.maxHealth;
+             Player.Instance.armor = data.armor;
+             Player.Instance.maxArmor = data.maxArmor;
+             Player.Instance.strength = data.strength;
+             Player.Instance.agility = data.agility;
+             Player.Instance.intelligence = data.intelligence;
+             Player.Instance.endurance = data.endurance;
+             Player.Instance.money = data.money;
+             Player.Instance.experience = data.experience;
+             Player.Instance.blockingPower = data.blockingPower;
+             Player.Instance.isAlive = data.isAlife;
              Debug.Log(Application.persistentDataPath);
         }
-        PlayerController.Instance.UpdateHUD();
+        Player.Instance.UpdateHUD();
     }
 
 }

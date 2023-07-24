@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    public static PlayerController Instance;
+    public static Player Instance;
     [SerializeField] private Slider healthSlider;
     public int health;
     public int maxHealth;
@@ -19,13 +19,13 @@ public class PlayerController : MonoBehaviour
     public int endurance;
     public int blockingPower;
 
-    public int minbBlockingPower=1;
+    public int minBlockingPower=1;
     // public static int s_specialSkill;
     [SerializeField] private Text moneyText;
     public int money;
     public int experience;
 
-    public bool isAlife;
+    public bool isAlive;
 
     private void Awake()
     {
@@ -46,15 +46,15 @@ public class PlayerController : MonoBehaviour
         armorSlider.value = armor;
         moneyText.text = $"Money :{money}";
     }
-
-    public void TakeDamageArmor(int damage)
+/*
+    public void TakeDamage(int damage)
     {
         if (armor > 0)
         {
             armor -= damage / blockingPower;
             if (armor < 0)
             {
-                TakeDamageHealth(armor);
+                TakeDamageHealth(-armor);
             }
         }
         else
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         UpdateHUD();
     }
 
-    public void TakeDamageHealth(int damage)
+    private void TakeDamageHealth(int damage)
     {
         health -= damage;
         if (health <= 0)
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
             Death();
         }
         UpdateHUD();
-    }
+    }*/
 
     public void TakeMoney(int money)
     {
@@ -82,6 +82,6 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
-        isAlife = false;
+        isAlive = false;
     }
 }

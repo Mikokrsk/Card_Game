@@ -13,15 +13,18 @@ public class PlayerController : MonoBehaviour
     public int armor;
     public int maxArmor;
 
-    public int strength;
-    public int agility;
-    public int intelligence;
+    public int strength;//Attack Power
+    public int agility;// 
+    public int intelligence;//Heal Power
     public int endurance;
+    public int blockingPower;
+
+    public int minbBlockingPower=1;
     // public static int s_specialSkill;
     [SerializeField] private Text moneyText;
-    public int money;  
-    public int experience;   
-    public int blockingPower;    
+    public int money;
+    public int experience;
+
     public bool isAlife;
 
     private void Awake()

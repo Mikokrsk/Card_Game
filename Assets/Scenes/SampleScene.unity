@@ -703,7 +703,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.000030517578}
-  m_SizeDelta: {x: 1920, y: 300}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &128163218
 MonoBehaviour:
@@ -712,7 +712,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128163216}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
@@ -740,7 +740,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 165, y: 275}
-  m_Spacing: {x: 50, y: 0}
+  m_Spacing: {x: 10, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
 --- !u!1 &215302011
@@ -1144,7 +1144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 300}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &408167633
@@ -2342,8 +2342,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 600}
+  m_AnchoredPosition: {x: 0, y: 40}
+  m_SizeDelta: {x: 700, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741182690
 MonoBehaviour:
@@ -2366,7 +2366,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 165, y: 275}
-  m_Spacing: {x: 100, y: 50}
+  m_Spacing: {x: 100, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &796581230
@@ -3587,7 +3587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1261316540
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3623,16 +3623,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728cc15efc955f94782e4b24baa53cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: []
+  cardsCount: -1
   eventText: {fileID: 0}
   cardDeck: {fileID: 0}
-  cardsEvent: []
-  cardPosition: []
   cardsTriggersObject: {fileID: 741182688}
-  buttonsTrigger: []
+  cardsEventObject: {fileID: 1925713106}
   buttonPref: {fileID: 7330891150512056748, guid: c3256b8a89790414dbeb05e58f2d9028, type: 3}
-  cardsObject: {fileID: 1925713106}
-  cardsCount: 3
+  cards: []
+  cardsEvent: []
+  buttonsTrigger: []
 --- !u!1001 &1277852971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6079,8 +6078,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 600}
+  m_AnchoredPosition: {x: 0, y: 40}
+  m_SizeDelta: {x: 700, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925713108
 MonoBehaviour:
@@ -6103,7 +6102,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 165, y: 275}
-  m_Spacing: {x: 100, y: 50}
+  m_Spacing: {x: 100, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1931442285
@@ -6612,11 +6611,11 @@ RectTransform:
   m_Father: {fileID: 1261316540}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 359.7}
-  m_SizeDelta: {x: 600, y: 80}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 490}
+  m_SizeDelta: {x: 950, y: 225}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2038634709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6647,10 +6646,10 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 'EventText '
 --- !u!222 &2038634710
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -8,17 +8,16 @@ using UnityEngine.UI;
 
 public class ChoiceCardEvent : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> cards;
+    [SerializeField] public int cardsCount;
     [SerializeField] private Text eventText;
-    [SerializeField] private CardDeck cardDeck;
-    [SerializeField] private List<GameObject> cardsEvent;
-    [SerializeField] private Transform[] cardPosition;
+    [SerializeField] private CardDeck cardDeck;   
     [SerializeField] private GameObject cardsTriggersObject;
+    [SerializeField] private GameObject cardsEventObject;   
+    [SerializeField] private GameObject buttonPref;    
+    [SerializeField] private List<GameObject> cards;
+    [SerializeField] private List<GameObject> cardsEvent;
+    //[SerializeField] private Transform[] cardPosition;
     [SerializeField] private Button[] buttonsTrigger;
-    [SerializeField] private GameObject buttonPref;
-    [SerializeField] private GameObject cardsObject;
-    [SerializeField] private int cardsCount;
-
     private void Awake()
     {
         cardDeck = CardDeck.Instance;
@@ -37,17 +36,19 @@ public class ChoiceCardEvent : MonoBehaviour
             }
         }
         cardDeck.AddCardToCardDeck(cardsEvent[index]);
-        Debug.Log($"index = {index}");
+        gameObject.SetActive(false);
     }
     private void OnEnable()
     {
+        if (cardsCount<=0)cardsCount = 1;
+           
         buttonsTrigger = new Button[cardsCount];
         for (int i = 0; i < cardsCount; i++)
         {
-            buttonsTrigger[i] = AddCard(buttonPref, gameObject.transform, cardsTriggersObject.transform).GetComponent<Button>();
+            buttonsTrigger[i] = AddCard(buttonPref,cardsTriggersObject.transform).GetComponent<Button>();
         }
-        cardPosition = cardsTriggersObject.GetComponentsInChildren<Transform>().Skip(1).ToArray();
-        Debug.Log(cardPosition[0].transform.position);
+       // cardPosition = cardsTriggersObject.GetComponentsInChildren<Transform>().Skip(1).ToArray();
+       // Debug.Log(cardPosition[0].transform.position);
         // buttonsTrigger = cardsTriggersObject.GetComponentsInChildren<Button>();
         foreach (var button in buttonsTrigger)
         {
@@ -55,12 +56,12 @@ public class ChoiceCardEvent : MonoBehaviour
         }
         eventText.text = " ";
         cardsEvent.Clear();
-        for (int i = 0; i < cardPosition.Length; i++)
+        for (int i = 0; i < cardsCount; i++)
         {
             cardsEvent.Add(GetRandomCard());
-            cardsEvent[i] = AddCard(cardsEvent[i], cardsObject.transform, cardsObject.transform);
+            cardsEvent[i] = AddCard(cardsEvent[i],cardsEventObject.transform);
            
-            if (i + 1 >= cardPosition.Length)
+            if (i + 1 >= cardsCount)
             {
                 eventText.text += $"{cardsEvent.Last().GetComponent<Card>().cardType}";
             }
@@ -95,7 +96,7 @@ public class ChoiceCardEvent : MonoBehaviour
         }
         foreach (var button in buttonsTrigger)
         {
-            button.onClick.RemoveAllListeners();
+            Destroy(button.gameObject);
         }
     }
     public void AddCardToCardDeck(Button button)
@@ -105,12 +106,12 @@ public class ChoiceCardEvent : MonoBehaviour
 
     }
 
-    private GameObject AddCard(GameObject cardPref, Transform position, Transform parent)
+    private GameObject AddCard(GameObject cardPref, Transform parent)
     {
         var item_go = Instantiate(cardPref);
         item_go.transform.SetParent(parent, false);
         item_go.transform.SetSiblingIndex(0);
-        item_go.transform.position = position.position;
+       // item_go.transform.position = position.position;
         return item_go;
     }
     private GameObject GetRandomCard()

@@ -9,9 +9,10 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private Transform contentContainer;
     //[SerializeField] private GameObject cardPref;
     [SerializeField] private List<Card> cardsOnCardDeck;
+    [SerializeField] public List<Card> activeCards;
     public static CardDeck Instance;
     public int maxActiveCard = 3;
-    public int activeCard = 0;
+   // public int activeCard = 0;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class CardDeck : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);        
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -33,7 +34,7 @@ public class CardDeck : MonoBehaviour
     public void AddCardToCardDeck(GameObject cardPref)
     {
         var item_go = Instantiate(cardPref);
-        item_go.transform.SetParent(contentContainer,false);
+        item_go.transform.SetParent(contentContainer, false);
         UpdateCardsOnCardDeck();
         // item_go.GetComponent<Image>().color = cardsInHand.Count % 2 == 0 ? Color.yellow : Color.cyan;       
     }
@@ -51,5 +52,18 @@ public class CardDeck : MonoBehaviour
     public void OnMouseExitCardDeck()
     {
         transform.position = new Vector3(transform.position.x, deckDown, transform.position.z);
+    }
+
+    public void UpdateActiveCards(Card activeCard, bool isActiveCard)
+    {
+        if (isActiveCard)
+        {
+            activeCards.Add(activeCard);
+        }
+        else
+        {
+            activeCards.Remove(activeCard);
+        }
+
     }
 }

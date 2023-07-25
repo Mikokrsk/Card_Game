@@ -19,11 +19,11 @@ public class Card : MonoBehaviour
         }
         else
         {
-            if (CardDeck.Instance.activeCard < CardDeck.Instance.maxActiveCard)
+            if (CardDeck.Instance.activeCards.Count < CardDeck.Instance.maxActiveCard)
             {
                 isActiveCard = true;
                 cardFrame.SetActive(true);
-                CardDeck.Instance.activeCard++;
+                CardDeck.Instance.UpdateActiveCards(this,true);
             }
         }
 
@@ -33,7 +33,7 @@ public class Card : MonoBehaviour
     {
         isActiveCard = false;
         cardFrame.SetActive(false);
-        CardDeck.Instance.activeCard--;
+        CardDeck.Instance.UpdateActiveCards(this, false);
     }
 }
 public enum CardType

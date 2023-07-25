@@ -10,8 +10,11 @@ using System;
 public class gameManager : MonoBehaviour
 {
     public GameState gameState = GameState.menu;
-    private GameObject BattleCanvas;
-    private GameObject AdventureCanvas;
+    [SerializeField] private GameObject battleCanvas;
+    [SerializeField] private GameObject battleManager;
+    [SerializeField] private GameObject adventureCanvas;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject menuCanvas;
     public static gameManager Instance;
     // [SerializeField] private Player playerController;
     // Start is called before the first frame update
@@ -24,50 +27,71 @@ public class gameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
     }
 
     void Start()
     {
-        SaveManager.Instance.LoadPlayerData();
+        // SaveManager.Instance.LoadPlayerData();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameState == GameState.battle)
+        if (gameState == GameState.menu && menuCanvas.active == false)
+        {
+            MenuState(true);
+        }
+        if (gameState == GameState.adventure && adventureCanvas.active == false)
+        {
+            AdventureState(true);
+        }
+        if (gameState == GameState.battle && battleCanvas.active == false)
         {
             BattleState(true);
         }
     }
 
-    private void MenuState(bool active)
+    public void MenuState(bool active)
     {
         if (active)
         {
-            //Menu activate
+            gameState = GameState.menu;            
+            menuCanvas.SetActive(active);
+            LoadScene(0);           
         }
         else
         {
+            gameState = GameState.adventure;
+            menuCanvas.SetActive(active);
             AdventureState(!active);
-            BattleState(!active);
+
         }
 
     }
 
-    private void AdventureState(bool active)
-    {
-        AdventureCanvas.SetActive(active);
-
-    }
-
-    private void BattleState(bool active)
+    public void AdventureState(bool active)
     {
         if (active)
         {
-            AdventureState(true);
+            gameState = GameState.adventure;
+            SaveManager.Instance.LoadPlayerData();
         }
-        BattleManager.Instance.gameObject.SetActive(active);
-        BattleCanvas.SetActive(active);
+        else BattleState(false);
+        
+        adventureCanvas.SetActive(active);
+        player.SetActive(active);
+    }
+
+    public void BattleState(bool active)
+    {
+        if (active)
+        {
+            if (adventureCanvas.active == false) AdventureState(true);
+            gameState = GameState.battle;
+        }
+        battleManager.SetActive(active);
+        battleCanvas.SetActive(active);
     }
 
     public void PauseState(bool active)

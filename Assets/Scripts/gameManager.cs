@@ -24,7 +24,7 @@ public class gameManager : MonoBehaviour
     }
     void Start()
     {
-        LoadData();
+        SaveManager.Instance.LoadPlayerData();
     }
 
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class gameManager : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    [System.Serializable]
+    /*[System.Serializable]
     class SaveDataClass
     {
         public int health;
@@ -98,6 +98,6 @@ public class gameManager : MonoBehaviour
              Debug.Log(Application.persistentDataPath);
         }
         Player.Instance.UpdateHUD();
-    }
+    }*/
 
 }

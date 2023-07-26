@@ -27,9 +27,10 @@ public class Enemy : MonoBehaviour
         healthSlider.value = health;
         armorSlider.maxValue = armor = maxArmor;
         armorSlider.value = armor;
-        BattleManager.Instance.enemy = this;
+       // BattleManager.Instance.enemy = this;
         cam = Camera.main.GetComponent<Transform>();
         canvas.transform.LookAt(transform.position + cam.forward);
+        //BattleManager.Instance.UpdateEnemyList();
     }
     private void OnEnable()
     {

@@ -37,6 +37,10 @@ public class Player : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    private void OnEnable()
+    {
+        SaveManager.Instance.LoadPlayerData();
+    }
 
     public void UpdateHUD()
     {

@@ -9,7 +9,10 @@ using System;
 
 public class gameManager : MonoBehaviour
 {
-    public GameState gameState = GameState.menu;
+   // public GameState gameState;
+   // public bool isAdventure;
+   // public bool isMainMenu;
+    public bool isBattle;
     [SerializeField] private GameObject battleCanvas;
     [SerializeField] private GameObject battleManager;
     [SerializeField] private GameObject adventureCanvas;
@@ -38,61 +41,86 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameState == GameState.menu && menuCanvas.active == false)
+     /*   if (isMainMenu && menuCanvas.active == false)
         {
-            MenuState(true);
-        }
-        if (gameState == GameState.adventure && adventureCanvas.active == false)
+          //  SetState(gameState);
+        }        
+        if (isBattle && battleCanvas.active == false)
         {
-            AdventureState(true);
-        }
-        if (gameState == GameState.battle && battleCanvas.active == false)
-        {
-            BattleState(true);
-        }
+            //SetState(gameState);
+        }*/
     }
 
-    public void MenuState(bool active)
+    public void MainMenuState(bool active)
     {
         if (active)
         {
-            gameState = GameState.menu;            
-            menuCanvas.SetActive(active);
-            LoadScene(0);           
+            LoadScene(0);
+            menuCanvas.SetActive(true);
+            adventureCanvas.SetActive(false);
+            player.SetActive(false);
+            if (isBattle)
+            {
+                BattleState(false);
+            }
         }
         else
         {
-            gameState = GameState.adventure;
-            menuCanvas.SetActive(active);
-            AdventureState(!active);
-
+            menuCanvas.SetActive(false);
+            adventureCanvas.SetActive(true);
+            player.SetActive(true);
+            if (isBattle)
+            {
+                BattleState(true);
+            }
         }
-
+        
     }
 
-    public void AdventureState(bool active)
+    /*public void AdventureState(bool active)
     {
         if (active)
         {
-            gameState = GameState.adventure;
-            SaveManager.Instance.LoadPlayerData();
+            isAdventure = true;
         }
-        else BattleState(false);
-        
         adventureCanvas.SetActive(active);
         player.SetActive(active);
-    }
+    }*/
 
     public void BattleState(bool active)
     {
-        if (active)
-        {
-            if (adventureCanvas.active == false) AdventureState(true);
-            gameState = GameState.battle;
-        }
+        isBattle = active;
         battleManager.SetActive(active);
         battleCanvas.SetActive(active);
     }
+/*
+    public void SetState()
+    {
+        if (isMainMenu)
+        {
+            MenuState(true);
+            AdventureState(false);
+            BattleState(false);
+        }
+        else
+        {
+            if (isAdventure)
+            {
+                MenuState(false);
+                AdventureState(true);
+                BattleState(false);
+            }
+            else
+            {
+                if (isBattle)
+                {
+                    MenuState(false);
+                    AdventureState(true);
+                    BattleState(true);
+                }
+            }
+        }
+    }*/
 
     public void PauseState(bool active)
     {
@@ -112,9 +140,4 @@ public class gameManager : MonoBehaviour
     }
 
 }
-public enum GameState
-{
-    menu,
-    adventure,
-    battle
-}
+

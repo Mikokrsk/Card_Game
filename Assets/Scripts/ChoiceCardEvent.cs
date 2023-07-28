@@ -99,12 +99,12 @@ public class ChoiceCardEvent : MonoBehaviour
             Destroy(button.gameObject);
         }
     }
-    public void AddCardToCardDeck(Button button)
+/*    public void AddCardToCardDeck(Button button)
     {
 
         cardDeck.AddCardToCardDeck(cardsEvent[0]);
 
-    }
+    }*/
 
     private GameObject AddCard(GameObject cardPref, Transform parent)
     {

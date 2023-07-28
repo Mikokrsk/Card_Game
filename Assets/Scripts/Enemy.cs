@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    public string name;
+    [SerializeField] private Text nameText;
     public int health;
     public int maxHealth;
     [SerializeField] private Slider healthSlider;

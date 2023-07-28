@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
-    [SerializeField] private int index;
+    [SerializeField] private int number;
     [SerializeField] private GameObject cardFrame;
     public CardType cardType ;
+    public int price;
     public bool isActiveCard = false;
     // Start is called before the first frame update
 

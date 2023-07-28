@@ -167,9 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b8b4ee0aac55249bc257cd20d5d1f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 2
+  number: 2
   cardFrame: {fileID: 1982257495260081314}
   cardType: 0
+  price: 40
   isActiveCard: 0
 --- !u!114 &456240701885273485
 MonoBehaviour:

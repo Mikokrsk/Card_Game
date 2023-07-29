@@ -6,7 +6,20 @@ using UnityEngine.Profiling;
 
 public class EventManager : MonoBehaviour
 {
+    public static EventManager Instance;
     [SerializeField] private List<GameObject> events;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+    }
 
     public void ActiveRandomEvent()
     {

@@ -21,6 +21,7 @@ public class ShopManager : MonoBehaviour
         cards.AddRange(Array.ConvertAll(Resources.LoadAll("Cards", typeof(GameObject)), assets => (GameObject)assets));
         eventText = GetComponentInChildren<Text>();
     }
+
     private void buttonCallBack(Button buttonPressed)
     {
         Debug.Log("Button presed");
@@ -39,7 +40,7 @@ public class ShopManager : MonoBehaviour
             buttonPressed.gameObject.transform.Find("SoldCardFrame").gameObject.SetActive(true);
             CardDeck.Instance.AddCardToCardDeck(cardsEvent[index]);
             buttonPressed.interactable = false;
-            Player.Instance.money = money;
+            Player.Instance.TakeMoney(money);
         }
 
         // gameObject.SetActive(false);

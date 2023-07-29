@@ -37,11 +37,14 @@ public class Player : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    private void OnEnable()
+   /* private void OnEnable()
+    {
+        SaveManager.Instance.LoadPlayerData();
+    }*/
+    private void Start()
     {
         SaveManager.Instance.LoadPlayerData();
     }
-
     public void UpdateHUD()
     {
         healthSlider.maxValue = maxHealth;

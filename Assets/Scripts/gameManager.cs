@@ -139,5 +139,9 @@ public class gameManager : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
+    public void NextGameTurn()
+    {
+        EventManager.Instance.ActiveRandomEvent();
+    }
 }
 

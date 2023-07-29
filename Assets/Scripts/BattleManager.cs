@@ -31,7 +31,8 @@ public class BattleManager : MonoBehaviour
     {
         player = Player.Instance;
         spawnEnemyManager.SpawnRandomEnemy();
-        endTurn.gameObject.SetActive(true);
+        //endTurn.gameObject.SetActive(true);
+        gameManager.Instance.BattleState(true);
     }
 
     public void UpdateEnemyList()
@@ -241,4 +242,9 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Protection Enemy");
     }
 
+    private void Death(Enemy enemy)
+    {
+        Debug.Log($"Enemy death : {enemy}");
+
+    }
 }

@@ -9,8 +9,7 @@ using UnityEngine.UI;
 public class ChoiceCardEvent : MonoBehaviour
 {
     [SerializeField] public int cardsCount;
-    [SerializeField] private Text eventText;
-    [SerializeField] private CardDeck cardDeck;   
+    [SerializeField] private Text eventText;  
     [SerializeField] private GameObject cardsTriggersObject;
     [SerializeField] private GameObject cardsEventObject;   
     [SerializeField] private GameObject buttonPref;    
@@ -19,8 +18,7 @@ public class ChoiceCardEvent : MonoBehaviour
     //[SerializeField] private Transform[] cardPosition;
     [SerializeField] private Button[] buttonsTrigger;
     private void Awake()
-    {
-        cardDeck = CardDeck.Instance;
+    {        
         cards.AddRange(Array.ConvertAll(Resources.LoadAll("Cards", typeof(GameObject)), assets => (GameObject)assets));
         eventText = GetComponentInChildren<Text>();
     }
@@ -35,7 +33,7 @@ public class ChoiceCardEvent : MonoBehaviour
                 break;
             }
         }
-        cardDeck.AddCardToCardDeck(cardsEvent[index]);
+        CardDeck.Instance.AddCardToCardDeck(cardsEvent[index]);
         gameObject.SetActive(false);
     }
     private void OnEnable()

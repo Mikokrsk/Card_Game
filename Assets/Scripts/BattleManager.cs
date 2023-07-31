@@ -103,15 +103,15 @@ public class BattleManager : MonoBehaviour
         {
             if (activeCard.cardType == CardType.Attack)
             {
-                TakeDamage(enemy, player.strength);
+                TakeDamage(enemy, player.strength + activeCard.cardPower);
             }
             if (activeCard.cardType == CardType.Medicine)
             {
-                Heal(player, player.intelligence);
+                Heal(player, player.intelligence + activeCard.cardPower);
             }
             if (activeCard.cardType == CardType.Protection)
             {
-                Protection(player, player.blockingPower);
+                Protection(player, player.blockingPower + activeCard.cardPower);
             }
             CardDeck.Instance.activeCards.Remove(activeCard);
             Destroy(activeCard.gameObject);
@@ -162,10 +162,9 @@ public class BattleManager : MonoBehaviour
 
         if (enemy.health <= 0)
         {
-            enemies.Remove(enemy);
-            Destroy(enemy.gameObject);
-            RemoveEnemyFromList(enemy);
-           // enemy.Death();
+            Death(enemy);
+
+            // enemy.Death();
         }
         enemy.UpdateHUD();
         Debug.Log("Enemy Take Damage");
@@ -245,6 +244,8 @@ public class BattleManager : MonoBehaviour
     private void Death(Enemy enemy)
     {
         Debug.Log($"Enemy death : {enemy}");
-
+        enemies.Remove(enemy);
+        Destroy(enemy.gameObject);
+        RemoveEnemyFromList(enemy);
     }
 }

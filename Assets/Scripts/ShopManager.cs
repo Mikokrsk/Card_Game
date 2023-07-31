@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] public int cardsCount;
-    [SerializeField] private List<Text> pricesList;
+    [SerializeField] private List<TMP_Text> pricesList;
     [SerializeField] private Text eventText;
     [SerializeField] private GameObject cardsTriggersObject;
     [SerializeField] private GameObject cardsEventObject;
@@ -34,13 +35,13 @@ public class ShopManager : MonoBehaviour
                 break;
             }
         }
-        var money = Player.Instance.money - Convert.ToInt32(pricesList[index].text);
-        if (money >=0)
+        var price = Convert.ToInt32(pricesList[index].text);
+        if (Player.Instance.money - price >=0)
         {
             buttonPressed.gameObject.transform.Find("SoldCardFrame").gameObject.SetActive(true);
             CardDeck.Instance.AddCardToCardDeck(cardsEvent[index]);
             buttonPressed.interactable = false;
-            Player.Instance.TakeMoney(money);
+            Player.Instance.TakeMoney(-price);
         }
 
         // gameObject.SetActive(false);
@@ -52,7 +53,7 @@ public class ShopManager : MonoBehaviour
         pricesList.Clear();
         buttonsTrigger.Clear();
         if (cardsCount < 3) cardsCount = 3;
-
+        //pricesList = new List<TextMeshPro>(cardsCount);
         eventText.text = "Shop";
         CreateButton();
 
@@ -61,6 +62,7 @@ public class ShopManager : MonoBehaviour
             cardsEvent.Add(GetRandomCard());
             var card = AddCard(cardsEvent[i], cardsEventObject.transform);
             pricesList[i].text = card.GetComponent<Card>().price.ToString();
+            Debug.Log(card.GetComponent<Card>().price.ToString());
             cardsEvent[i] = card;
         }
 
@@ -72,7 +74,7 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < cardsCount; i++)
         {
             var button = AddCard(buttonPref, cardsTriggersObject.transform);
-            pricesList.Add(button.GetComponentInChildren<Text>());
+            pricesList.Add(button.GetComponentInChildren<TMP_Text>());
             buttonsTrigger.Add(button.GetComponent<Button>());
         }
 

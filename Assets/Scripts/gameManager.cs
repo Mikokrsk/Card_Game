@@ -6,18 +6,21 @@ using System.IO;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using System;
+using System.Linq;
 
 public class gameManager : MonoBehaviour
 {
-   // public GameState gameState;
-   // public bool isAdventure;
-   // public bool isMainMenu;
+    // public GameState gameState;
+    // public bool isAdventure;
+    // public bool isMainMenu;
     public bool isBattle;
     [SerializeField] private GameObject battleCanvas;
     [SerializeField] private GameObject battleManager;
     [SerializeField] private GameObject adventureCanvas;
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject menuCanvas;
+    [SerializeField] private GameObject player;
+    [SerializeField] private List<GameObject> characters;
     public static gameManager Instance;
     // [SerializeField] private Player playerController;
     // Start is called before the first frame update
@@ -30,25 +33,36 @@ public class gameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
+        StartGame();
     }
 
-    void Start()
+    void StartGame()
     {
-        // SaveManager.Instance.LoadPlayerData();
+        if (player == null)
+        {
+            Debug.Log("Player is null");
+            if (characters.Count <= 0)
+            {
+                characters.AddRange(Array.ConvertAll(Resources.LoadAll("Ñharacters", typeof(GameObject)), assets => (GameObject)assets));
+            }
+
+            var newPlayer = Instantiate(characters.First());
+            newPlayer.transform.SetParent(gameObject.transform, false);
+            player = newPlayer;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-     /*   if (isMainMenu && menuCanvas.active == false)
-        {
-          //  SetState(gameState);
-        }        
-        if (isBattle && battleCanvas.active == false)
-        {
-            //SetState(gameState);
-        }*/
+        /*   if (isMainMenu && menuCanvas.active == false)
+           {
+             //  SetState(gameState);
+           }        
+           if (isBattle && battleCanvas.active == false)
+           {
+               //SetState(gameState);
+           }*/
     }
 
     public void MainMenuState(bool active)
@@ -58,7 +72,8 @@ public class gameManager : MonoBehaviour
             LoadScene(0);
             menuCanvas.SetActive(true);
             adventureCanvas.SetActive(false);
-            player.SetActive(false);
+            if (player != null) player.SetActive(false);
+            gameOverCanvas.SetActive(false);
             if (isBattle)
             {
                 BattleState(false);
@@ -68,13 +83,14 @@ public class gameManager : MonoBehaviour
         {
             menuCanvas.SetActive(false);
             adventureCanvas.SetActive(true);
+            if (player == null) { StartGame(); }
             player.SetActive(true);
             if (isBattle)
             {
                 BattleState(true);
             }
         }
-        
+
     }
 
     /*public void AdventureState(bool active)
@@ -93,34 +109,34 @@ public class gameManager : MonoBehaviour
         battleManager.SetActive(active);
         battleCanvas.SetActive(active);
     }
-/*
-    public void SetState()
-    {
-        if (isMainMenu)
+    /*
+        public void SetState()
         {
-            MenuState(true);
-            AdventureState(false);
-            BattleState(false);
-        }
-        else
-        {
-            if (isAdventure)
+            if (isMainMenu)
             {
-                MenuState(false);
-                AdventureState(true);
+                MenuState(true);
+                AdventureState(false);
                 BattleState(false);
             }
             else
             {
-                if (isBattle)
+                if (isAdventure)
                 {
                     MenuState(false);
                     AdventureState(true);
-                    BattleState(true);
+                    BattleState(false);
+                }
+                else
+                {
+                    if (isBattle)
+                    {
+                        MenuState(false);
+                        AdventureState(true);
+                        BattleState(true);
+                    }
                 }
             }
-        }
-    }*/
+        }*/
 
     public void PauseState(bool active)
     {
@@ -131,6 +147,16 @@ public class gameManager : MonoBehaviour
         else
         {
             Time.timeScale = 1;
+        }
+    }
+
+    public void GameOverState()
+    {
+        gameOverCanvas.SetActive(true);
+        Destroy(player);
+        foreach(var card in CardDeck.Instance.cardsOnCardDeck)
+        {
+            Destroy(card);
         }
     }
 

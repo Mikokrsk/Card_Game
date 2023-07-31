@@ -193,7 +193,8 @@ public class BattleManager : MonoBehaviour
 
         if (player.health <= 0)
         {
-            player.Death();
+            // player.Death();
+            Death(player);
         }
         player.UpdateHUD();
         Debug.Log("Player Take Damage");
@@ -241,11 +242,25 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Protection Enemy");
     }
 
+    private void Death(Player player )
+    {
+        Debug.Log("Player is dead");
+        //player.Death();
+        gameManager.Instance.GameOverState();
+    }
     private void Death(Enemy enemy)
     {
-        Debug.Log($"Enemy death : {enemy}");
-        enemies.Remove(enemy);
+        Debug.Log($"Enemy death : {enemy.name}");
         Destroy(enemy.gameObject);
         RemoveEnemyFromList(enemy);
+        if (enemies.Count<=0)
+        {
+            EndBattle();
+        }
+    }
+
+    private void EndBattle()
+    {
+        gameManager.Instance.BattleState(false);
     }
 }

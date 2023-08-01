@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,7 @@ public class Player : MonoBehaviour
 
     public int minBlockingPower=1;
     // public static int s_specialSkill;
-    [SerializeField] private Text moneyText;
+    [SerializeField] private TMP_Text moneyText;
     public int money;
     public int experience;
 

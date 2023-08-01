@@ -22,8 +22,21 @@ public class EventManager : MonoBehaviour
     }
 
     public void ActiveRandomEvent()
-    {
-        var index = UnityEngine.Random.Range(0, events.Count);
-        events[index].gameObject.SetActive(true);
+    {        
+        bool isActiveEvent = true;
+        foreach (var _event in events)
+        {
+            if (_event.gameObject.active == true)
+            {
+                isActiveEvent = false;
+                break;
+            }
+        }
+        if (isActiveEvent)
+        {            
+            var index = UnityEngine.Random.Range(0, events.Count);
+            events[index].gameObject.SetActive(true);
+            Debug.Log($"Event {events[index]} active");
+        }
     }
 }

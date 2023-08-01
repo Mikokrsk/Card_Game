@@ -114,6 +114,7 @@ public class BattleManager : MonoBehaviour
                 Protection(player, player.blockingPower + activeCard.cardPower);
             }
             CardDeck.Instance.activeCards.Remove(activeCard);
+            CardDeck.Instance.cardsOnCardDeck.Remove(activeCard);
             Destroy(activeCard.gameObject);
         }
         endTurn.interactable = false;

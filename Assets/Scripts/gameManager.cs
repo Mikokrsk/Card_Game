@@ -154,10 +154,27 @@ public class gameManager : MonoBehaviour
     {
         gameOverCanvas.SetActive(true);
         Destroy(player);
-        foreach(var card in CardDeck.Instance.cardsOnCardDeck)
+        var cardDeck = CardDeck.Instance.cardsOnCardDeck;
+        if (cardDeck.Count > 0)
         {
-            Destroy(card);
+            foreach (var card in cardDeck)
+            {
+                //CardDeck.Instance.cardsOnCardDeck.Remove(card);
+                Destroy(card.gameObject);
+            }
+            CardDeck.Instance.cardsOnCardDeck.Clear();
         }
+
+        var enemies = BattleManager.Instance.enemies;
+        if (enemies.Count > 0)
+        {
+            foreach (var enemy in enemies)
+            {
+                Destroy(enemy.gameObject);
+            }
+            BattleManager.Instance.enemies.Clear();
+        }
+
     }
 
     public void LoadScene(int index)

@@ -927,6 +927,7 @@ MonoBehaviour:
   endTurn: {fileID: 1480634984}
   enemies: []
   enemyObject: {fileID: 127243202}
+  playerAnimator: {fileID: 0}
 --- !u!4 &273126074
 Transform:
   m_ObjectHideFlags: 0

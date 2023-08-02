@@ -20,12 +20,12 @@ public class Player : MonoBehaviour
     public int endurance;
     public int blockingPower;
 
-    public int minBlockingPower=1;
+    public int minBlockingPower = 1;
     // public static int s_specialSkill;
     [SerializeField] private TMP_Text moneyText;
     public int money;
     public int experience;
-
+    public Animator playerAnimator;
     public bool isAlive;
 
     private void Awake()

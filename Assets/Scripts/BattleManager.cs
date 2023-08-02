@@ -16,6 +16,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Button endTurn;
     public List<Enemy> enemies;
     [SerializeField] GameObject enemyObject;
+    [SerializeField] private Animator playerAnimator;
     private void Awake()
     {
         if (Instance != null)
@@ -30,9 +31,11 @@ public class BattleManager : MonoBehaviour
     private void OnEnable()
     {
         player = Player.Instance;
+        playerAnimator = Player.Instance.playerAnimator;
         spawnEnemyManager.SpawnRandomEnemy();
         //endTurn.gameObject.SetActive(true);
         gameManager.Instance.BattleState(true);
+        PlayerTurn();
     }
 
     public void UpdateEnemyList()
@@ -92,8 +95,11 @@ public class BattleManager : MonoBehaviour
     }
     private void PlayerTurn()
     {
-        player.blockingPower = player.minBlockingPower;
-        endTurn.interactable = true;
+        if (player.isAlive)
+        {
+            player.blockingPower = player.minBlockingPower;
+            endTurn.interactable = true;
+        }
     }
     public void EndPlayerTurn()
     {
@@ -191,14 +197,16 @@ public class BattleManager : MonoBehaviour
         {
             player.health -= damage;
         }
-
+        
+        player.UpdateHUD();
+        playerAnimator.SetTrigger("GetHit");
+        Debug.Log("Player Take Damage");
+        
         if (player.health <= 0)
         {
             // player.Death();
             Death(player);
         }
-        player.UpdateHUD();
-        Debug.Log("Player Take Damage");
     }
 
     private void Heal(Player player, int healPower)
@@ -247,6 +255,15 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("Player is dead");
         //player.Death();
+        player.isAlive = false;
+        playerAnimator.SetBool("Dead",true);
+        //Invoke("gameManager.Instance.GameOverState()",5f);
+        StartCoroutine(PlayerDeath());
+        
+    }
+    IEnumerator PlayerDeath()
+    {
+        yield return new WaitForSeconds(3f);
         gameManager.Instance.GameOverState();
     }
     private void Death(Enemy enemy)

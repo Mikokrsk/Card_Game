@@ -50,6 +50,7 @@ public class gameManager : MonoBehaviour
             newPlayer.transform.SetParent(gameObject.transform, false);
             player = newPlayer;
         }
+        //Player.Instance.playerAnimator.SetBool("MoveFWD",true);
     }
 
     // Update is called once per frame

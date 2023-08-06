@@ -34,6 +34,7 @@ public class BattleManager : MonoBehaviour
     {
         player = Player.Instance;
         playerAnimator = Player.Instance.playerAnimator;
+        //playerAnimator.SetBool("MoveFWD",false);
         spawnEnemyManager.SpawnRandomEnemy();
         //endTurn.gameObject.SetActive(true);
         gameManager.Instance.BattleState(true);
@@ -98,6 +99,7 @@ public class BattleManager : MonoBehaviour
         if (player.isAlive)
         {
             player.blockingPower = player.minBlockingPower;
+            player.UpdateHUD();
             endTurn.interactable = true;
         }
     }
@@ -109,7 +111,7 @@ public class BattleManager : MonoBehaviour
     }
     IEnumerator EndPlayerTurnCoroutine()
     {
-
+        
         var activeCards = CardDeck.Instance.activeCards;
         foreach (var activeCard in activeCards.ToArray())
         {
@@ -130,6 +132,7 @@ public class BattleManager : MonoBehaviour
             Destroy(activeCard.gameObject);
             //StartCoroutine(StartAnimation());
             //Invoke("EndBattle",5f);
+            player.UpdateHUD();
             yield return new WaitForSeconds(3f);
         }
         // endTurn.interactable = false;
@@ -252,7 +255,7 @@ public class BattleManager : MonoBehaviour
     private void PlayerProtection(Player player, int blockingPower)
     {
         //Protection UP
-        player.blockingPower += blockingPower;
+        player.blockingPower = blockingPower;
         //  Debug.Log("Protection Player");
     }
     private void EnemyProtection(Enemy enemy, int blockingPower)
@@ -284,6 +287,7 @@ public class BattleManager : MonoBehaviour
 
     private void EndBattle()
     {
+       // playerAnimator.SetBool("MoveFWD", true);
         gameManager.Instance.BattleState(false);
     }
 }

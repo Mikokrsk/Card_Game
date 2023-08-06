@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public int agility;// 
     public int intelligence;//Heal Power
     public int endurance;
+    [SerializeField] private TMP_Text protection;
     public int blockingPower;
 
     public int minBlockingPower = 1;
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
         armorSlider.maxValue = maxArmor;
         armorSlider.value = armor;
         moneyText.text = $"Money :{money}";
+        protection.text = $"Protect :{blockingPower}";
     }
 /*
     public void TakeDamage(int damage)

@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
     [SerializeField] private List<GameObject> events;
+    [SerializeField] private Button nextEvent;
 
     private void Awake()
     {
@@ -22,7 +25,8 @@ public class EventManager : MonoBehaviour
     }
 
     public void ActiveRandomEvent()
-    {        
+    {
+        nextEvent.interactable = false;
         bool isActiveEvent = true;
         foreach (var _event in events)
         {
@@ -35,8 +39,16 @@ public class EventManager : MonoBehaviour
         if (isActiveEvent)
         {            
             var index = UnityEngine.Random.Range(0, events.Count);
-            events[index].gameObject.SetActive(true);
-            Debug.Log($"Event {events[index]} active");
+            StartCoroutine(ActiveEvent(index));
         }
+    }
+    IEnumerator ActiveEvent(int index)
+    {
+        Player.Instance.playerAnimator.SetBool("MoveFWD",true);
+        yield return new WaitForSeconds(2f);
+        Player.Instance.playerAnimator.SetBool("MoveFWD", false);
+        events[index].gameObject.SetActive(true);
+        nextEvent.interactable = true;
+        //Debug.Log($"Event {events[index]} active");
     }
 }

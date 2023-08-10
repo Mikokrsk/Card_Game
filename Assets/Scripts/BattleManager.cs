@@ -255,6 +255,7 @@ public class BattleManager : MonoBehaviour
     private void PlayerProtection(Player player, int blockingPower)
     {
         //Protection UP
+        playerAnimator.SetTrigger("Protection");
         player.blockingPower = blockingPower;
         //  Debug.Log("Protection Player");
     }

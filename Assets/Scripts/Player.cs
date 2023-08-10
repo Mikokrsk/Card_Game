@@ -18,14 +18,15 @@ public class Player : MonoBehaviour
     public int agility;// 
     public int intelligence;//Heal Power
     public int endurance;
+    [SerializeField] private TMP_Text protection;
     public int blockingPower;
 
-    public int minBlockingPower=1;
+    public int minBlockingPower = 1;
     // public static int s_specialSkill;
     [SerializeField] private TMP_Text moneyText;
     public int money;
     public int experience;
-
+    public Animator playerAnimator;
     public bool isAlive;
 
     private void Awake()
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
         armorSlider.maxValue = maxArmor;
         armorSlider.value = armor;
         moneyText.text = $"Money :{money}";
+        protection.text = $"Protect :{blockingPower}";
     }
 /*
     public void TakeDamage(int damage)

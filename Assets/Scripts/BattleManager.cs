@@ -17,6 +17,7 @@ public class BattleManager : MonoBehaviour
     public List<Enemy> enemies;
     [SerializeField] GameObject enemyObject;
     [SerializeField] private Animator playerAnimator;
+    //[SerializeField] private Animator enemyAnimator;
     //[SerializeField] private ColorBlock newColor;
 
     private void Awake()
@@ -54,12 +55,13 @@ public class BattleManager : MonoBehaviour
             }
             enemies.First().gameObject.SetActive(true);
             enemy = enemies.First().GetComponent<Enemy>();
+            //enemyAnimator = enemy.animator;
+            //enemyAnimator.SetBool("Walk",false);
         }
         else
         {
             gameObject.gameObject.SetActive(false);
         }
-
     }
     public void AddEnemyInList(Enemy addEnemy)
     {
@@ -88,7 +90,7 @@ public class BattleManager : MonoBehaviour
             {
                 PlayerTakeDamage(player, enemy.strength);                
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(3f);
         }
         player.UpdateHUD();
         enemy.UpdateHUD();
@@ -160,6 +162,7 @@ public class BattleManager : MonoBehaviour
     public void PlayerAttack(Enemy enemy, int damage)
     {
         playerAnimator.SetTrigger("Attack");
+        enemy.animator.SetTrigger("GetDamage");
         damage /= enemy.blockingPower;
         if (damage <= 0)
         {
@@ -191,6 +194,7 @@ public class BattleManager : MonoBehaviour
     }
     public void PlayerTakeDamage(Player player, int damage)
     {
+        enemy.animator.SetTrigger("Attack");
         damage /= player.blockingPower;
         if (damage <= 0)
         {
@@ -212,7 +216,7 @@ public class BattleManager : MonoBehaviour
         }
 
         player.UpdateHUD();
-        playerAnimator.SetTrigger("GetHit");
+        playerAnimator.SetTrigger("GetDamage");
         // Debug.Log("Player Take Damage");
 
         if (player.health <= 0)
@@ -240,6 +244,7 @@ public class BattleManager : MonoBehaviour
     private void EnemyHeal(Enemy enemy, int healPower)
     {
         //Heal
+        enemy.animator.SetTrigger("Heal");
         if (enemy.health + healPower >= enemy.maxHealth)
         {
             enemy.health = enemy.maxHealth;
@@ -262,6 +267,7 @@ public class BattleManager : MonoBehaviour
     private void EnemyProtection(Enemy enemy, int blockingPower)
     {
         //Protection UP
+        enemy.animator.SetTrigger("Protection");
         enemy.blockingPower += blockingPower;
         //   Debug.Log("Protection Enemy");
     }
@@ -278,6 +284,18 @@ public class BattleManager : MonoBehaviour
     private void Death(Enemy enemy)
     {
         // Debug.Log($"Enemy death : {enemy.name}");
+        /*Destroy(enemy.gameObject);
+        RemoveEnemyFromList(enemy);
+        if (enemies.Count <= 0)
+        {
+            EndBattle();
+        }*/
+        StartCoroutine(EnemyDeath());
+    }
+    IEnumerator EnemyDeath()
+    {
+        enemy.animator.SetBool("Death",true);
+        yield return new WaitForSeconds(3f);
         Destroy(enemy.gameObject);
         RemoveEnemyFromList(enemy);
         if (enemies.Count <= 0)

@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public int blockingPower;
     public int minBlockingPower = 1;
     public bool isAlive;
+    public Animator animator;
     [SerializeField] private Canvas canvas;
     [SerializeField] private Transform cam;
     // [SerializeField] private Player player;
@@ -29,9 +30,10 @@ public class Enemy : MonoBehaviour
         healthSlider.value = health;
         armorSlider.maxValue = armor = maxArmor;
         armorSlider.value = armor;
+        nameText.text = name;
        // BattleManager.Instance.enemy = this;
         cam = Camera.main.GetComponent<Transform>();
-        canvas.transform.LookAt(transform.position + cam.forward);
+        canvas.transform.LookAt(canvas.transform.position + cam.forward);
         //BattleManager.Instance.UpdateEnemyList();
     }
     private void OnEnable()

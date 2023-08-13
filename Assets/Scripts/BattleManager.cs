@@ -90,7 +90,10 @@ public class BattleManager : MonoBehaviour
             {
                 PlayerTakeDamage(player, enemy.strength);                
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
+            var animationTime = enemy.animator.GetCurrentAnimatorStateInfo(0).length;
+            Debug.Log($"Time = {animationTime}");
+            yield return new WaitForSeconds(animationTime);
         }
         player.UpdateHUD();
         enemy.UpdateHUD();
@@ -295,7 +298,8 @@ public class BattleManager : MonoBehaviour
     IEnumerator EnemyDeath()
     {
         enemy.animator.SetBool("Death",true);
-        yield return new WaitForSeconds(3f);
+        var animationTime = enemy.animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationTime);
         Destroy(enemy.gameObject);
         RemoveEnemyFromList(enemy);
         if (enemies.Count <= 0)

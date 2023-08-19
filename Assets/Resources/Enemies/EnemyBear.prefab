@@ -828,7 +828,7 @@ GameObject:
   - component: {fileID: 3921799953405842093}
   - component: {fileID: 3921799953405842094}
   - component: {fileID: 3921799953405842095}
-  - component: {fileID: 3921799953405842097}
+  - component: {fileID: -6200592077009983314}
   m_Layer: 0
   m_Name: EnemyBear
   m_TagString: Enemy
@@ -903,7 +903,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3921799953405842097
+--- !u!114 &-6200592077009983314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -912,23 +912,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3921799953405842090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e18f29583efa33a4d86d601cbc92bb5e, type: 3}
+  m_Script: {fileID: 11500000, guid: b2e24197997a8904dafd6f84ecab5606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   name: Bear
-  nameText: {fileID: 3921799952747025403}
+  nameText: {fileID: 0}
   health: 0
-  maxHealth: 150
-  healthSlider: {fileID: 3921799953223577663}
+  maxHealth: 100
+  healthSlider: {fileID: 0}
   armor: 0
-  maxArmor: 150
-  armorSlider: {fileID: 3921799952293375891}
-  strength: 15
+  maxArmor: 100
+  armorSlider: {fileID: 0}
+  strength: 0
   blockingPower: 0
   minBlockingPower: 1
-  isAlive: 1
-  animator: {fileID: 3903347237624572848}
-  canvas: {fileID: 3921799952853306279}
+  isAlive: 0
+  animator: {fileID: 0}
+  canvas: {fileID: 0}
   cam: {fileID: 0}
 --- !u!1 &3921799953565356212
 GameObject:
@@ -1143,11 +1143,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5b41ba4c79702547a89de7544b80656, type: 3}
---- !u!95 &3903347237624572848 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3734775969355451150, guid: f5b41ba4c79702547a89de7544b80656, type: 3}
-  m_PrefabInstance: {fileID: 432327239288594622}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6974762409867129290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7292658344771522932, guid: f5b41ba4c79702547a89de7544b80656, type: 3}

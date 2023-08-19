@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 5370510537355879184}
   - component: {fileID: 5370510537355879187}
   - component: {fileID: 5370510537355879186}
-  - component: {fileID: 5370510537355879180}
+  - component: {fileID: -4166065893298713480}
   m_Layer: 0
   m_Name: EnemyWolf
   m_TagString: Enemy
@@ -436,7 +436,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5370510537355879180
+--- !u!114 &-4166065893298713480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -445,23 +445,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 5370510537355879191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e18f29583efa33a4d86d601cbc92bb5e, type: 3}
+  m_Script: {fileID: 11500000, guid: e59feb11266769545a004a62312fcbb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   name: Wolf
-  nameText: {fileID: 5370510536671863366}
+  nameText: {fileID: 0}
   health: 0
-  maxHealth: 100
-  healthSlider: {fileID: 5370510537253192066}
+  maxHealth: 50
+  healthSlider: {fileID: 0}
   armor: 0
-  maxArmor: 100
-  armorSlider: {fileID: 5370510538468482606}
-  strength: 10
+  maxArmor: 50
+  armorSlider: {fileID: 0}
+  strength: 0
   blockingPower: 0
   minBlockingPower: 1
-  isAlive: 1
-  animator: {fileID: 170313610}
-  canvas: {fileID: 5370510536834808346}
+  isAlive: 0
+  animator: {fileID: 0}
+  canvas: {fileID: 0}
   cam: {fileID: 0}
 --- !u!1 &5370510537690217734
 GameObject:
@@ -1163,11 +1163,6 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: a3401f6406da6e64294187767d33bad7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8243bb353e5cb74481bb26fe62fd298, type: 3}
---- !u!95 &170313610 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9547338, guid: f8243bb353e5cb74481bb26fe62fd298, type: 3}
-  m_PrefabInstance: {fileID: 179792320}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &179315078 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 477254, guid: f8243bb353e5cb74481bb26fe62fd298, type: 3}

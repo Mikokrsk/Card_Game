@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 7615474741842187672}
   - component: {fileID: 7615474741842187675}
   - component: {fileID: 7615474741842187674}
-  - component: {fileID: 7615474741842187652}
+  - component: {fileID: 2045932931264680705}
   m_Layer: 0
   m_Name: EnemyDragonSoulEaterGrey
   m_TagString: Enemy
@@ -796,7 +796,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7615474741842187652
+--- !u!114 &2045932931264680705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -805,23 +805,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7615474741842187679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e18f29583efa33a4d86d601cbc92bb5e, type: 3}
+  m_Script: {fileID: 11500000, guid: cdb8713f50bde82438fde728ae9c24a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Dragon Soul Eater Grey
-  nameText: {fileID: 7615474742223557838}
+  name: DragoSoulEater
+  nameText: {fileID: 0}
   health: 0
-  maxHealth: 500
-  healthSlider: {fileID: 7615474741676635914}
+  maxHealth: 200
+  healthSlider: {fileID: 0}
   armor: 0
-  maxArmor: 500
-  armorSlider: {fileID: 7615474740727621798}
-  strength: 25
+  maxArmor: 200
+  armorSlider: {fileID: 0}
+  strength: 0
   blockingPower: 0
   minBlockingPower: 1
-  isAlive: 1
-  animator: {fileID: 7382868073903445352}
-  canvas: {fileID: 7615474742327741586}
+  isAlive: 0
+  animator: {fileID: 0}
+  canvas: {fileID: 0}
   cam: {fileID: 0}
 --- !u!1 &7615474742083557412
 GameObject:
@@ -1158,10 +1158,5 @@ PrefabInstance:
 --- !u!4 &7382868073893820062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 489222, guid: 36c38a65d57de7d4a9a582f9ee857701, type: 3}
-  m_PrefabInstance: {fileID: 7382868073893855640}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7382868073903445352 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9590000, guid: 36c38a65d57de7d4a9a582f9ee857701, type: 3}
   m_PrefabInstance: {fileID: 7382868073893855640}
   m_PrefabAsset: {fileID: 0}

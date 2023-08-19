@@ -21,62 +21,34 @@ public class Enemy : MonoBehaviour
     public Animator animator;
     [SerializeField] private Canvas canvas;
     [SerializeField] private Transform cam;
-    // [SerializeField] private Player player;
 
     private void Awake()
     {
+        SetEnemyAttributes();
+        SetDefaultEnemyValues();
+    }
+
+    private void SetDefaultEnemyValues()
+    {
+        canvas.transform.LookAt(canvas.transform.position + cam.forward);
         blockingPower = minBlockingPower;
         healthSlider.maxValue = health = maxHealth;
         healthSlider.value = health;
         armorSlider.maxValue = armor = maxArmor;
         armorSlider.value = armor;
         nameText.text = name;
-       // BattleManager.Instance.enemy = this;
-        cam = Camera.main.GetComponent<Transform>();
-        canvas.transform.LookAt(canvas.transform.position + cam.forward);
-        //BattleManager.Instance.UpdateEnemyList();
-    }
-    private void OnEnable()
-    {
-/*        healthSlider.maxValue = maxHealth;
-        healthSlider.value = health;
-        armorSlider.maxValue = maxArmor;
-        armorSlider.value = armor;
-        BattleManager.Instance.enemy = this;
-        cam = Camera.main.GetComponent<Transform>();
-        canvas.transform.LookAt(transform.position + cam.forward);*/
-    }
-    /*public void Attack()
-    {
-        player.TakeDamage(strength * attackPower);
-    }*/
-
-/*    public void TakeDamage(int damage)
-    {
-        if (armor > 0)
-        {
-            armor -= damage;
-            if (armor < 0)
-            {
-                TakeDamageHealth(armor);
-            }
-        }
-        else
-        {
-            TakeDamageHealth(damage);
-        }
-        UpdateHUD();
     }
 
-    private void TakeDamageHealth(int damage)
+    private void SetEnemyAttributes()
     {
-        health -= damage;
-        if (health <= 0)
-        {
-            Death();
-        }
-        UpdateHUD();
-    }*/
+        canvas = gameObject.GetComponentInChildren<Canvas>();
+        nameText = canvas.transform.Find("EnemyName").GetComponent<Text>();
+        healthSlider = canvas.transform.Find("HealthSlider").GetComponent<Slider>();
+        armorSlider = canvas.transform.Find("ArmorSlider").GetComponent<Slider>();
+        animator = GetComponentInChildren<Animator>();
+        cam = Camera.main.GetComponent<Transform>();
+    }
+
     public void Death()
     {
         Destroy(gameObject);
@@ -87,4 +59,6 @@ public class Enemy : MonoBehaviour
         healthSlider.value = health;
         armorSlider.value = armor;
     }
+
 }
+

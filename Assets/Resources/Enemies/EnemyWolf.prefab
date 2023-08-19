@@ -457,12 +457,14 @@ MonoBehaviour:
   maxArmor: 50
   armorSlider: {fileID: 0}
   strength: 0
+  healPower: 15
   blockingPower: 0
   minBlockingPower: 1
-  isAlive: 0
+  isAlive: 1
   animator: {fileID: 0}
   canvas: {fileID: 0}
   cam: {fileID: 0}
+  stepCount: 3
 --- !u!1 &5370510537690217734
 GameObject:
   m_ObjectHideFlags: 0

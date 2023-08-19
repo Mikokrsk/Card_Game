@@ -44,9 +44,9 @@ public class EventManager : MonoBehaviour
     }
     IEnumerator ActiveEvent(int index)
     {
-        Player.Instance.playerAnimator.SetBool("MoveFWD",true);
+        Player.Instance.animator.SetBool("MoveFWD",true);
         yield return new WaitForSeconds(2f);
-        Player.Instance.playerAnimator.SetBool("MoveFWD", false);
+        Player.Instance.animator.SetBool("MoveFWD", false);
         events[index].gameObject.SetActive(true);
         nextEvent.interactable = true;
         //Debug.Log($"Event {events[index]} active");

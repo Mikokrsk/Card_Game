@@ -3444,22 +3444,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 6434044941877359199}
   health: 0
-  maxHealth: 0
+  maxHealth: 100
   armorSlider: {fileID: 8302778886292451791}
   armor: 0
-  maxArmor: 0
+  maxArmor: 100
   strength: 0
   agility: 0
   intelligence: 0
   endurance: 0
   protection: {fileID: 7145022090285171876}
-  blockingPower: 0
+  blockingPower: 1
   minBlockingPower: 1
   moneyText: {fileID: 3093065455481274845}
-  money: 0
+  money: 100
   experience: 0
-  playerAnimator: {fileID: 7717073036123071969}
+  animator: {fileID: 0}
   isAlive: 1
+  canvas: {fileID: 0}
 --- !u!1 &6495463204184637064
 GameObject:
   m_ObjectHideFlags: 0

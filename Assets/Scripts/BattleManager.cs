@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
-    [SerializeField] Player player;
+    public Player player;
     public Enemy enemy;
     [SerializeField] private SpawnEnemyManager spawnEnemyManager;
     //[SerializeField] private bool isPlayerTurn;
@@ -17,6 +17,7 @@ public class BattleManager : MonoBehaviour
     public List<Enemy> enemies;
     [SerializeField] GameObject enemyObject;
     [SerializeField] private Animator playerAnimator;
+    //[SerializeField] private Animator enemyAnimator;
     //[SerializeField] private ColorBlock newColor;
 
     private void Awake()
@@ -33,7 +34,7 @@ public class BattleManager : MonoBehaviour
     private void OnEnable()
     {
         player = Player.Instance;
-        playerAnimator = Player.Instance.playerAnimator;
+        playerAnimator = Player.Instance.animator;
         //playerAnimator.SetBool("MoveFWD",false);
         spawnEnemyManager.SpawnRandomEnemy();
         //endTurn.gameObject.SetActive(true);
@@ -54,12 +55,14 @@ public class BattleManager : MonoBehaviour
             }
             enemies.First().gameObject.SetActive(true);
             enemy = enemies.First().GetComponent<Enemy>();
+            //enemyAnimator = enemy.animator;
+            //enemyAnimator.SetBool("Walk",false);
         }
         else
         {
             gameObject.gameObject.SetActive(false);
+            EndBattle();
         }
-
     }
     public void AddEnemyInList(Enemy addEnemy)
     {
@@ -68,10 +71,12 @@ public class BattleManager : MonoBehaviour
     }
     public void RemoveEnemyFromList(Enemy removeEnemy)
     {
+        Debug.Log("Enemy death");
         enemies.Remove(removeEnemy);
+        Destroy(removeEnemy.gameObject);
         UpdateEnemyList();
     }
-    IEnumerator EnemyTurn()
+/*    IEnumerator EnemyTurn()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -88,15 +93,22 @@ public class BattleManager : MonoBehaviour
             {
                 PlayerTakeDamage(player, enemy.strength);                
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
+            var animationTime = enemy.animator.GetCurrentAnimatorStateInfo(0).length;
+            Debug.Log($"Time = {animationTime}");
+            yield return new WaitForSeconds(animationTime);
         }
         player.UpdateHUD();
         enemy.UpdateHUD();
         PlayerTurn();
-    }
-    private void PlayerTurn()
+    }*/
+    public void PlayerTurn()
     {
-        if (player.isAlive)
+        if (enemy.isAlive == false)
+        {
+            RemoveEnemyFromList(enemy);
+        }
+        if (player.isAlive && enemies.Count >=1 )
         {
             player.blockingPower = player.minBlockingPower;
             player.UpdateHUD();
@@ -111,21 +123,21 @@ public class BattleManager : MonoBehaviour
     }
     IEnumerator EndPlayerTurnCoroutine()
     {
-        
         var activeCards = CardDeck.Instance.activeCards;
+        var animationTime = 1f;
         foreach (var activeCard in activeCards.ToArray())
         {
             if (activeCard.cardType == CardType.Attack)
             {
-                PlayerAttack(enemy, player.strength + activeCard.cardPower);
+                animationTime = player.PlayerAttack(enemy,activeCard.cardPower);
             }
-            if (activeCard.cardType == CardType.Medicine)
+            else if (activeCard.cardType == CardType.Medicine)
             {
-                PlayerHeal(player, player.intelligence + activeCard.cardPower);
+                animationTime = player.PlayerHeal( activeCard.cardPower);
             }
-            if (activeCard.cardType == CardType.Protection)
+            else if (activeCard.cardType == CardType.Protection)
             {
-                PlayerProtection(player, player.blockingPower + activeCard.cardPower);
+                animationTime = player.PlayerProtection(activeCard.cardPower);
             }
             CardDeck.Instance.activeCards.Remove(activeCard);
             CardDeck.Instance.cardsOnCardDeck.Remove(activeCard);
@@ -133,12 +145,19 @@ public class BattleManager : MonoBehaviour
             //StartCoroutine(StartAnimation());
             //Invoke("EndBattle",5f);
             player.UpdateHUD();
-            yield return new WaitForSeconds(3f);
+            Debug.Log($"Player Time = {animationTime}");
+            yield return new WaitForSeconds(animationTime+1f);
+            if (enemy.isAlive == false)
+            {
+                RemoveEnemyFromList(enemy);                
+                StopCoroutine(EndPlayerTurnCoroutine());
+                break;
+            }
         }
         // endTurn.interactable = false;
         enemy.blockingPower = enemy.minBlockingPower;
         enemy.UpdateHUD();
-        StartCoroutine(EnemyTurn());
+        StartCoroutine(enemy.EnemyTurn());
     }
 
     /*private void PlayerAttack()
@@ -157,9 +176,10 @@ public class BattleManager : MonoBehaviour
         Heal(player,player.intelligence);
     }*/
 
-    public void PlayerAttack(Enemy enemy, int damage)
+    /*public void PlayerAttack(Enemy enemy, int damage)
     {
         playerAnimator.SetTrigger("Attack");
+        enemy.animator.SetTrigger("GetDamage");
         damage /= enemy.blockingPower;
         if (damage <= 0)
         {
@@ -188,9 +208,10 @@ public class BattleManager : MonoBehaviour
         }
         enemy.UpdateHUD();
         // Debug.Log("Enemy Take Damage");
-    }
-    public void PlayerTakeDamage(Player player, int damage)
+    }*/
+/*    public void PlayerTakeDamage(Player player, int damage)
     {
+        enemy.animator.SetTrigger("Attack");
         damage /= player.blockingPower;
         if (damage <= 0)
         {
@@ -212,7 +233,7 @@ public class BattleManager : MonoBehaviour
         }
 
         player.UpdateHUD();
-        playerAnimator.SetTrigger("GetHit");
+        playerAnimator.SetTrigger("GetDamage");
         // Debug.Log("Player Take Damage");
 
         if (player.health <= 0)
@@ -220,9 +241,9 @@ public class BattleManager : MonoBehaviour
             // player.Death();
             StartCoroutine(PlayerDeath());
         }
-    }
+    }*/
 
-    private void PlayerHeal(Player player, int healPower)
+   /* private void PlayerHeal(Player player, int healPower)
     {
         //Heal
         playerAnimator.SetTrigger("Heal");
@@ -236,10 +257,11 @@ public class BattleManager : MonoBehaviour
         }
         player.UpdateHUD();
         //Debug.Log("Heal Player");
-    }
-    private void EnemyHeal(Enemy enemy, int healPower)
+    }*/
+    /*private void EnemyHeal(Enemy enemy, int healPower)
     {
         //Heal
+        enemy.animator.SetTrigger("Heal");
         if (enemy.health + healPower >= enemy.maxHealth)
         {
             enemy.health = enemy.maxHealth;
@@ -250,23 +272,24 @@ public class BattleManager : MonoBehaviour
         }
         enemy.UpdateHUD();
         //  Debug.Log("Heal Enemy");
-    }
+    }*/
 
-    private void PlayerProtection(Player player, int blockingPower)
+   /* private void PlayerProtection(Player player, int blockingPower)
     {
         //Protection UP
         playerAnimator.SetTrigger("Protection");
         player.blockingPower = blockingPower;
         //  Debug.Log("Protection Player");
-    }
-    private void EnemyProtection(Enemy enemy, int blockingPower)
+    }*/
+    /*private void EnemyProtection(Enemy enemy, int blockingPower)
     {
         //Protection UP
+        enemy.animator.SetTrigger("Protection");
         enemy.blockingPower += blockingPower;
         //   Debug.Log("Protection Enemy");
-    }
+    }*/
 
-    IEnumerator PlayerDeath()
+    /*IEnumerator PlayerDeath()
     {
         Debug.Log("Player is dead");
         //player.Death();
@@ -274,19 +297,32 @@ public class BattleManager : MonoBehaviour
         playerAnimator.SetBool("Dead", true);
         yield return new WaitForSeconds(3f);
         gameManager.Instance.GameOverState();
-    }
-    private void Death(Enemy enemy)
+    }*/
+    /*private void Death(Enemy enemy)
     {
         // Debug.Log($"Enemy death : {enemy.name}");
+        *//*Destroy(enemy.gameObject);
+        RemoveEnemyFromList(enemy);
+        if (enemies.Count <= 0)
+        {
+            EndBattle();
+        }*//*
+        StartCoroutine(EnemyDeath());
+    }*/
+    /*IEnumerator EnemyDeath()
+    {
+        enemy.animator.SetBool("Death",true);
+        var animationTime = enemy.animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationTime);
         Destroy(enemy.gameObject);
         RemoveEnemyFromList(enemy);
         if (enemies.Count <= 0)
         {
             EndBattle();
         }
-    }
+    }*/
 
-    private void EndBattle()
+    public void EndBattle()
     {
        // playerAnimator.SetBool("MoveFWD", true);
         gameManager.Instance.BattleState(false);

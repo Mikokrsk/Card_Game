@@ -6,11 +6,23 @@ using System.IO;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using System;
+using System.Linq;
 
 public class gameManager : MonoBehaviour
 {
-    public static gameManager Instance;    
-   // [SerializeField] private Player playerController;
+    // public GameState gameState;
+    // public bool isAdventure;
+    // public bool isMainMenu;
+    public bool isBattle;
+    [SerializeField] private GameObject battleCanvas;
+    [SerializeField] private GameObject battleManager;
+    [SerializeField] private GameObject adventureCanvas;
+    [SerializeField] private GameObject gameOverCanvas;
+    [SerializeField] private GameObject menuCanvas;
+    [SerializeField] private GameObject player;
+    [SerializeField] private List<GameObject> characters;
+    public static gameManager Instance;
+    // [SerializeField] private Player playerController;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -20,16 +32,149 @@ public class gameManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);        
+        DontDestroyOnLoad(gameObject);
+        StartGame();
     }
-    void Start()
+
+    void StartGame()
     {
-        LoadData();
+        if (player == null)
+        {
+            Debug.Log("Player is null");
+            if (characters.Count <= 0)
+            {
+                characters.AddRange(Array.ConvertAll(Resources.LoadAll("Ñharacters", typeof(GameObject)), assets => (GameObject)assets));
+            }
+
+            var newPlayer = Instantiate(characters.First());
+            newPlayer.transform.SetParent(gameObject.transform, false);
+            player = newPlayer;
+        }
+        //Player.Instance.playerAnimator.SetBool("MoveFWD",true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*   if (isMainMenu && menuCanvas.active == false)
+           {
+             //  SetState(gameState);
+           }        
+           if (isBattle && battleCanvas.active == false)
+           {
+               //SetState(gameState);
+           }*/
+    }
+
+    public void MainMenuState(bool active)
+    {
+        if (active)
+        {
+            LoadScene(0);
+            menuCanvas.SetActive(true);
+            adventureCanvas.SetActive(false);
+            if (player != null) player.SetActive(false);
+            gameOverCanvas.SetActive(false);
+            if (isBattle)
+            {
+                BattleState(false);
+            }
+        }
+        else
+        {
+            menuCanvas.SetActive(false);
+            adventureCanvas.SetActive(true);
+            if (player == null) { StartGame(); }
+            player.SetActive(true);
+            if (isBattle)
+            {
+                BattleState(true);
+            }
+        }
+
+    }
+
+    /*public void AdventureState(bool active)
+    {
+        if (active)
+        {
+            isAdventure = true;
+        }
+        adventureCanvas.SetActive(active);
+        player.SetActive(active);
+    }*/
+
+    public void BattleState(bool active)
+    {
+        isBattle = active;
+        battleManager.SetActive(active);
+        battleCanvas.SetActive(active);
+    }
+    /*
+        public void SetState()
+        {
+            if (isMainMenu)
+            {
+                MenuState(true);
+                AdventureState(false);
+                BattleState(false);
+            }
+            else
+            {
+                if (isAdventure)
+                {
+                    MenuState(false);
+                    AdventureState(true);
+                    BattleState(false);
+                }
+                else
+                {
+                    if (isBattle)
+                    {
+                        MenuState(false);
+                        AdventureState(true);
+                        BattleState(true);
+                    }
+                }
+            }
+        }*/
+
+    public void PauseState(bool active)
+    {
+        if (active)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+    public void GameOverState()
+    {
+        gameOverCanvas.SetActive(true);
+        Destroy(player);
+        var cardDeck = CardDeck.Instance.cardsOnCardDeck;
+        if (cardDeck.Count > 0)
+        {
+            foreach (var card in cardDeck)
+            {
+                //CardDeck.Instance.cardsOnCardDeck.Remove(card);
+                Destroy(card.gameObject);
+            }
+            CardDeck.Instance.cardsOnCardDeck.Clear();
+        }
+
+        var enemies = BattleManager.Instance.enemies;
+        if (enemies.Count > 0)
+        {
+            foreach (var enemy in enemies)
+            {
+                Destroy(enemy.gameObject);
+            }
+            BattleManager.Instance.enemies.Clear();
+        }
 
     }
 
@@ -38,66 +183,9 @@ public class gameManager : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    [System.Serializable]
-    class SaveDataClass
+    public void NextGameTurn()
     {
-        public int health;
-        public int maxHealth;
-        public int armor;
-        public int maxArmor;
-        public int strength;
-        public int agility;
-        public int intelligence;
-        public int endurance;
-        public int money;
-        public int experience;
-        public int blockingPower;
-        public bool isAlife;
+        EventManager.Instance.ActiveRandomEvent();
     }
-
-    public void SaveData()
-    {
-        SaveDataClass data = new SaveDataClass();
-        data.health = Player.Instance.health;
-        data.maxHealth = Player.Instance.maxHealth;
-        data.armor = Player.Instance.armor;
-        data.maxArmor = Player.Instance.maxArmor;
-        data.strength = Player.Instance.strength;
-        data.agility = Player.Instance.agility;
-        data.intelligence = Player.Instance.intelligence;
-        data.endurance = Player.Instance.endurance;
-        data.money = Player.Instance.money;
-        data.experience = Player.Instance.experience;
-        data.blockingPower = Player.Instance.blockingPower;
-        data.isAlife = Player.Instance.isAlive;
-        string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-        //Debug.Log($"Save Health = {data.health} MaxHealth = {data.maxHealth}");
-    }
-
-    public void LoadData()
-    {
-        string path = Application.persistentDataPath + "/savefile.json";
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            SaveDataClass data = JsonUtility.FromJson<SaveDataClass>(json);
-
-             Player.Instance.health = data.health;
-             Player.Instance.maxHealth = data.maxHealth;
-             Player.Instance.armor = data.armor;
-             Player.Instance.maxArmor = data.maxArmor;
-             Player.Instance.strength = data.strength;
-             Player.Instance.agility = data.agility;
-             Player.Instance.intelligence = data.intelligence;
-             Player.Instance.endurance = data.endurance;
-             Player.Instance.money = data.money;
-             Player.Instance.experience = data.experience;
-             Player.Instance.blockingPower = data.blockingPower;
-             Player.Instance.isAlive = data.isAlife;
-             Debug.Log(Application.persistentDataPath);
-        }
-        Player.Instance.UpdateHUD();
-    }
-
 }
+

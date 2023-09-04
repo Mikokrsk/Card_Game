@@ -8,7 +8,7 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private float deckDown = -150f;
     [SerializeField] private Transform contentContainer;
     //[SerializeField] private GameObject cardPref;
-    [SerializeField] private List<Card> cardsOnCardDeck;
+    [SerializeField] public List<Card> cardsOnCardDeck;
     [SerializeField] public List<Card> activeCards;
     public static CardDeck Instance;
     public int maxActiveCard = 3;

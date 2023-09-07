@@ -1,4 +1,4 @@
-//using OpenCover.Framework.Model;
+﻿//using OpenCover.Framework.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +43,7 @@ public class gameManager : MonoBehaviour
             Debug.Log("Player is null");
             if (characters.Count <= 0)
             {
-                characters.AddRange(Array.ConvertAll(Resources.LoadAll("�haracters", typeof(GameObject)), assets => (GameObject)assets));
+                characters.AddRange(Array.ConvertAll(Resources.LoadAll("Сharacters", typeof(GameObject)), assets => (GameObject)assets));
             }
 
             var newPlayer = Instantiate(characters.First());

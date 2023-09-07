@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        SaveManager.Instance.LoadPlayerData();
+        //SaveManager.Instance.LoadPlayerData();
         SetPlayerAttributes();
     }
 

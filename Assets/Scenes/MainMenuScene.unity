@@ -1284,6 +1284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckUp: 0
   deckDown: -150
+  cardsPref: []
   contentContainer: {fileID: 128163217}
   cardsOnCardDeck: []
   activeCards: []
@@ -3094,7 +3095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.031612657, g: 0.20680968, b: 0.4528302, a: 0.65882355}
+  m_Color: {r: 0.031612657, g: 0.20680968, b: 0.4528302, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

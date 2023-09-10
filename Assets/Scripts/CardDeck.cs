@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,14 @@ public class CardDeck : MonoBehaviour
 {
     [SerializeField] private float deckUp = 0f;
     [SerializeField] private float deckDown = -150f;
+    public List<GameObject> cardsPref;
     [SerializeField] private Transform contentContainer;
     //[SerializeField] private GameObject cardPref;
     [SerializeField] public List<Card> cardsOnCardDeck;
     [SerializeField] public List<Card> activeCards;
     public static CardDeck Instance;
     public int maxActiveCard = 3;
-   // public int activeCard = 0;
+    // public int activeCard = 0;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class CardDeck : MonoBehaviour
     void Start()
     {
         cardsOnCardDeck = new List<Card>();
+        cardsPref.AddRange(Array.ConvertAll(Resources.LoadAll("Cards", typeof(GameObject)), assets => (GameObject)assets));
         // UpdateCardsOnCardDeck();
     }
 
@@ -65,5 +68,11 @@ public class CardDeck : MonoBehaviour
             activeCards.Remove(activeCard);
         }
 
+    }
+
+    public void AddRandomCardToCardDeck()
+    {
+        var index = UnityEngine.Random.Range(0, cardsPref.Count);
+        AddCardToCardDeck(cardsPref[index]);
     }
 }

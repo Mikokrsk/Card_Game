@@ -76,45 +76,61 @@ public class BattleManager : MonoBehaviour
         Destroy(removeEnemy.gameObject);
         UpdateEnemyList();
     }
-/*    IEnumerator EnemyTurn()
-    {
-        for (int i = 0; i < 3; i++)
+    /*    IEnumerator EnemyTurn()
         {
-            int index = Random.Range(0, 3);
-            if (index == 0 && enemy.blockingPower <= enemy.minBlockingPower * 2)
+            for (int i = 0; i < 3; i++)
             {
-                EnemyProtection(enemy, enemy.blockingPower);
+                int index = Random.Range(0, 3);
+                if (index == 0 && enemy.blockingPower <= enemy.minBlockingPower * 2)
+                {
+                    EnemyProtection(enemy, enemy.blockingPower);
+                }
+                else if (index == 1 && enemy.health <= enemy.maxHealth - enemy.maxHealth / 10)
+                {
+                    EnemyHeal(enemy, enemy.maxHealth / 10);
+                }
+                else
+                {
+                    PlayerTakeDamage(player, enemy.strength);                
+                }
+                yield return new WaitForSeconds(1f);
+                var animationTime = enemy.animator.GetCurrentAnimatorStateInfo(0).length;
+                Debug.Log($"Time = {animationTime}");
+                yield return new WaitForSeconds(animationTime);
             }
-            else if (index == 1 && enemy.health <= enemy.maxHealth - enemy.maxHealth / 10)
-            {
-                EnemyHeal(enemy, enemy.maxHealth / 10);
-            }
-            else
-            {
-                PlayerTakeDamage(player, enemy.strength);                
-            }
-            yield return new WaitForSeconds(1f);
-            var animationTime = enemy.animator.GetCurrentAnimatorStateInfo(0).length;
-            Debug.Log($"Time = {animationTime}");
-            yield return new WaitForSeconds(animationTime);
-        }
-        player.UpdateHUD();
-        enemy.UpdateHUD();
-        PlayerTurn();
-    }*/
+            player.UpdateHUD();
+            enemy.UpdateHUD();
+            PlayerTurn();
+        }*/
     public void PlayerTurn()
     {
         if (enemy.isAlive == false)
         {
             RemoveEnemyFromList(enemy);
+            EndBattle();
         }
-        if (player.isAlive && enemies.Count >=1 )
+        else if (player.isAlive && enemies.Count >= 1)
         {
             player.blockingPower = player.minBlockingPower;
             player.UpdateHUD();
+            battleHelp();
             endTurn.interactable = true;
         }
     }
+
+    private static void battleHelp()
+    {
+        var countCard = CardDeck.Instance.maxActiveCard;
+        countCard -= CardDeck.Instance.cardsOnCardDeck.Count;
+        if (countCard > 0)
+        {
+            for (int i = 0; i < countCard; i++)
+            {
+                CardDeck.Instance.AddRandomCardToCardDeck();
+            }
+        }
+    }
+
     public void EndPlayerTurn()
     {
         endTurn.interactable = false;
@@ -129,11 +145,11 @@ public class BattleManager : MonoBehaviour
         {
             if (activeCard.cardType == CardType.Attack)
             {
-                animationTime = player.PlayerAttack(enemy,activeCard.cardPower);
+                animationTime = player.PlayerAttack(enemy, activeCard.cardPower);
             }
             else if (activeCard.cardType == CardType.Medicine)
             {
-                animationTime = player.PlayerHeal( activeCard.cardPower);
+                animationTime = player.PlayerHeal(activeCard.cardPower);
             }
             else if (activeCard.cardType == CardType.Protection)
             {
@@ -146,10 +162,10 @@ public class BattleManager : MonoBehaviour
             //Invoke("EndBattle",5f);
             player.UpdateHUD();
             Debug.Log($"Player Time = {animationTime}");
-            yield return new WaitForSeconds(animationTime+1f);
+            yield return new WaitForSeconds(animationTime + 1f);
             if (enemy.isAlive == false)
             {
-                RemoveEnemyFromList(enemy);                
+                RemoveEnemyFromList(enemy);
                 StopCoroutine(EndPlayerTurnCoroutine());
                 break;
             }
@@ -209,55 +225,55 @@ public class BattleManager : MonoBehaviour
         enemy.UpdateHUD();
         // Debug.Log("Enemy Take Damage");
     }*/
-/*    public void PlayerTakeDamage(Player player, int damage)
-    {
-        enemy.animator.SetTrigger("Attack");
-        damage /= player.blockingPower;
-        if (damage <= 0)
+    /*    public void PlayerTakeDamage(Player player, int damage)
         {
-            damage = 1;
-        }
-        if (player.armor > 0)
-        {
-            player.armor -= damage;
-            if (player.armor < 0)
+            enemy.animator.SetTrigger("Attack");
+            damage /= player.blockingPower;
+            if (damage <= 0)
             {
-                player.health -= -player.armor;
-                player.armor = 0;
+                damage = 1;
+            }
+            if (player.armor > 0)
+            {
+                player.armor -= damage;
+                if (player.armor < 0)
+                {
+                    player.health -= -player.armor;
+                    player.armor = 0;
+                }
+
+            }
+            else
+            {
+                player.health -= damage;
             }
 
-        }
-        else
-        {
-            player.health -= damage;
-        }
+            player.UpdateHUD();
+            playerAnimator.SetTrigger("GetDamage");
+            // Debug.Log("Player Take Damage");
 
-        player.UpdateHUD();
-        playerAnimator.SetTrigger("GetDamage");
-        // Debug.Log("Player Take Damage");
+            if (player.health <= 0)
+            {
+                // player.Death();
+                StartCoroutine(PlayerDeath());
+            }
+        }*/
 
-        if (player.health <= 0)
-        {
-            // player.Death();
-            StartCoroutine(PlayerDeath());
-        }
-    }*/
-
-   /* private void PlayerHeal(Player player, int healPower)
-    {
-        //Heal
-        playerAnimator.SetTrigger("Heal");
-        if (player.health + healPower >= player.maxHealth)
-        {
-            player.health = player.maxHealth;
-        }
-        else
-        {
-            player.health += healPower;
-        }
-        player.UpdateHUD();
-        //Debug.Log("Heal Player");
-    }*/
+    /* private void PlayerHeal(Player player, int healPower)
+     {
+         //Heal
+         playerAnimator.SetTrigger("Heal");
+         if (player.health + healPower >= player.maxHealth)
+         {
+             player.health = player.maxHealth;
+         }
+         else
+         {
+             player.health += healPower;
+         }
+         player.UpdateHUD();
+         //Debug.Log("Heal Player");
+     }*/
     /*private void EnemyHeal(Enemy enemy, int healPower)
     {
         //Heal
@@ -274,13 +290,13 @@ public class BattleManager : MonoBehaviour
         //  Debug.Log("Heal Enemy");
     }*/
 
-   /* private void PlayerProtection(Player player, int blockingPower)
-    {
-        //Protection UP
-        playerAnimator.SetTrigger("Protection");
-        player.blockingPower = blockingPower;
-        //  Debug.Log("Protection Player");
-    }*/
+    /* private void PlayerProtection(Player player, int blockingPower)
+     {
+         //Protection UP
+         playerAnimator.SetTrigger("Protection");
+         player.blockingPower = blockingPower;
+         //  Debug.Log("Protection Player");
+     }*/
     /*private void EnemyProtection(Enemy enemy, int blockingPower)
     {
         //Protection UP
@@ -324,7 +340,7 @@ public class BattleManager : MonoBehaviour
 
     public void EndBattle()
     {
-       // playerAnimator.SetBool("MoveFWD", true);
+        // playerAnimator.SetBool("MoveFWD", true);
         gameManager.Instance.BattleState(false);
     }
 }
